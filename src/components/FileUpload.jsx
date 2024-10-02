@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Button, Form, FormControl, FormGroup, FormLabel } from "react-bootstrap"
 import * as XLSX from "xlsx"
+import db from "../firebase"
+import { addDoc, collection } from "firebase/firestore";
 
 function FileUpload() {
 
@@ -13,9 +15,9 @@ function FileUpload() {
             const sheetName = workbook.SheetNames[0];
             const sheet = workbook.Sheets[sheetName];
             const sheetData = XLSX.utils.sheet_to_json(sheet);
-            const questions  = [];
+            const questions = [];
             sheetData.map((row) => {
-                questions.push({question: row.question, answer: row.answer});
+                questions.push({ question: row.question, answer: row.answer });
             })
 
             setFileData(questions)
@@ -23,15 +25,21 @@ function FileUpload() {
         reader.readAsArrayBuffer(file);
     };
 
-    const handleFormSubmit = (e) => {
+    const handleFormSubmit = async (e) => {
         e.preventDefault();
         console.log(fileData)
+        const docRef = await addDoc(collection(db, "tests"), {
+            test_name: "File update test",
+            test_data: fileData
+        });
+        console.log("Document written with ID: ", docRef.id);
+
     }
     return (<>
         <Form onSubmit={handleFormSubmit}>
             <FormGroup>
                 <FormLabel>Upload a file:</FormLabel>
-                <FormControl type="file" onChange={handleFileUpload}/>
+                <FormControl type="file" onChange={handleFileUpload} />
             </FormGroup>
             <Button type="submit">Upload</Button>
         </Form>
