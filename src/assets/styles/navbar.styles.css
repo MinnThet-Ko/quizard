@@ -1,0 +1,9 @@
+.navbar-container {
+    height: 120;
+    width: 100%;
+    background-color: gray;
+}
+.app-logo {
+    font-size: larger;
+    color: black;
+}

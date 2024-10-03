@@ -1,5 +1,6 @@
 import { Button } from "react-bootstrap"
-import FileUpload from "../components/FileUpload"
+import FlashcardNavbar from "../components/FlashcardNavbar"
+
 
 function Home() {
     return (<>
@@ -9,7 +10,7 @@ function Home() {
     <Button>
         Show all tests
     </Button>
-    <FileUpload/>
+
     </>)
 }
 

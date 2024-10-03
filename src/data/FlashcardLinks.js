@@ -19,4 +19,11 @@ export const FlashcardLinks = [
 
     },
 
+    {
+        id: "testUpload",
+        link: "/test/upload",
+        description: "Upload Test",
+
+    },
+
 ]
