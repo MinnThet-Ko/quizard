@@ -9,7 +9,7 @@ function FlashcardNavbar(){
             <Navbar.Brand className = "app-logo">Flashcard</Navbar.Brand>
             {
                 FlashcardLinks.map((link) => {
-                    return <Nav.Link href={link.link}>{link.description}</Nav.Link>
+                    return <Nav.Link key={link.id} href={link.link}>{link.description}</Nav.Link>
                 })
             }
         </Container>
