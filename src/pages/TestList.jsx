@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react"
 import {getDocs, collection} from "firebase/firestore"
 import db from "../firebase"
+import Test from "./Test"
+import { Link } from "react-router-dom"
 
 function TestList() {
     const [testList, setTestList] = useState([])
@@ -22,7 +24,9 @@ function TestList() {
     }, [])
     return (<>
         {
-            testList.length
+            testList.map((test) => {
+                return  <Link key={test.test_id} to={{ pathname: '/test/'+test.test_id }}>{test.test_name}</Link>
+            })
         }
     </>)
 }

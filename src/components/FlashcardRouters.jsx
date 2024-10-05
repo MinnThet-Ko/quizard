@@ -14,7 +14,7 @@ function FlashcardRouter(){
             <Routes>
                 <Route index element ={ <Home/>} />
                 <Route path="/test/list" element = {<TestList/>}/>
-                <Route path="/test/current/" element = {<Test/>}/>
+                <Route path="/test/:testId" element = {<Test/>}/>
                 <Route path="/test/upload" element = {<TestUpload/>}/>
             </Routes>
         </BrowserRouter>

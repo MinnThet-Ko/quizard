@@ -11,14 +11,7 @@ export const FlashcardLinks = [
         link: "/test/list",
         description: "Test List",
     },
-
-    {
-        id: "test",
-        link: "/test/current",
-        description: "Test",
-
-    },
-
+    
     {
         id: "testUpload",
         link: "/test/upload",
