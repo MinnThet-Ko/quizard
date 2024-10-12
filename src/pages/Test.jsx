@@ -3,10 +3,12 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
 import QuestionItem from "../components/QuestionItem";
 import db from "../firebase";
+import { Button, Form } from "react-bootstrap";
 
 function Test() {
     const [testData, setTestData] = useState([])
     const [answersList, setAnswerList] = useState([])
+    const [selectAnswers, setSelectedAnswer] = useState([])
 
     const params = useParams();
 
@@ -26,21 +28,43 @@ function Test() {
 
 
 
-    const handleAnswerSelect = () => {
-        return "This is a test";
+    const handleAnswerSelect = (e) => {
+        let stringArr = e.target.value.split("-");
+        let choice = {
+            question: stringArr[0],
+            answer: stringArr[1]
+        }
+        let dummyList = selectAnswers
+        let isExists = false;
+        dummyList.forEach((answer) => {
+            if(answer.question === choice.question){
+                answer.answer = choice.answer
+                isExists = true;
+            }
+        })
+        if(!isExists){
+            dummyList.push(choice)
+        }
+        setSelectedAnswer(dummyList)
     }
 
-    return (<>
+    const handleFormSubmit = (e) => {
+        e.preventDefault();
+        console.log(selectAnswers)
+    }
+
+    return (<Form onSubmit={handleFormSubmit}>
         {
 
             testData.map((testItem) => {
-                console.log(testItem)
                 return (
-                    <QuestionItem question={testItem.question} answerList={answersList} answer={testItem.answer} handleAnswerSelect={handleAnswerSelect} />
+                    <QuestionItem key={testItem.question} question={testItem.question} answerList={answersList} answer={testItem.answer} handleAnswerSelect={handleAnswerSelect} />
                 )
             })
         }
-    </>)
+
+        <Button type="submit">Submit</Button>
+    </Form>)
 }
 
 export default Test
