@@ -17,14 +17,14 @@ function QuestionItem({ question, answerList, answer, handleAnswerSelect }) {
         }
     }
     const randomizeAnswers = (answerList, exclusionList) => {
-
         if (exclusionList.length == 4) {
             shuffleArray(exclusionList)
             setPossibleAnswers(exclusionList)
             return;
         }
 
-        let randomAnswer = Math.floor(Math.random() * answerList.length);
+        let randomAnswer = answerList[Math.floor(Math.random() * answerList.length)];
+        
         if (exclusionList.includes(randomAnswer)) {
             randomizeAnswers(answerList, exclusionList);
         } else {

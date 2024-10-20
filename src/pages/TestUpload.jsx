@@ -21,7 +21,7 @@ function TestUpload() {
             sheetData.map((row) => {
                 questions.push({ question: row.question, answer: row.answer });
             })
-
+            console.log(questions)
             setFileData(questions)
         }
         reader.readAsArrayBuffer(file);

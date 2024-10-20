@@ -50,7 +50,15 @@ function Test() {
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
-        console.log(selectAnswers)
+        let correctAnswerCount = 0;
+        selectAnswers.forEach((selectAnswer) =>{
+            const testQuestion = testData.find((element) => element.question === selectAnswer.question) 
+            console.log(testQuestion)
+            if(testQuestion.answer.toString() === selectAnswer.answer){
+                correctAnswerCount++;
+            }
+        })
+        window.alert("Your score is "+correctAnswerCount+"/"+testData.length)
     }
 
     return (<Form onSubmit={handleFormSubmit}>
