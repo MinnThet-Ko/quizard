@@ -4,13 +4,22 @@ import { useParams } from "react-router-dom"
 import QuestionItem from "../components/QuestionItem";
 import db from "../firebase";
 import { Button, Form } from "react-bootstrap";
+import DialogModal from "../components/DialogModal";
 
 function Test() {
+
+    // State for this class
     const [testData, setTestData] = useState([])
     const [answersList, setAnswerList] = useState([])
     const [selectAnswers, setSelectedAnswer] = useState([])
 
+    const [maxScore, setMaxScore] = useState(0)
+    const [totalScore, setTotalScore] = useState(0)
+    const [displayModal, setDisplayModal] = useState(false)
+
+    //I have no idea what is this for.
     const params = useParams();
+    
 
     useEffect(() => {
         async function getTestData() {
@@ -19,6 +28,7 @@ function Test() {
             const resultTestDoc = await getDoc(refTestDoc);
             const resultTestData = resultTestDoc.data().test_data;
             setTestData(resultTestData)
+            setMaxScore(resultTestData.length)
             const tempAnswerList = [];
             resultTestData.map(test => tempAnswerList.push(test.answer));
             setAnswerList(tempAnswerList);
@@ -37,12 +47,12 @@ function Test() {
         let dummyList = selectAnswers
         let isExists = false;
         dummyList.forEach((answer) => {
-            if(answer.question === choice.question){
+            if (answer.question === choice.question) {
                 answer.answer = choice.answer
                 isExists = true;
             }
         })
-        if(!isExists){
+        if (!isExists) {
             dummyList.push(choice)
         }
         setSelectedAnswer(dummyList)
@@ -51,28 +61,41 @@ function Test() {
     const handleFormSubmit = (e) => {
         e.preventDefault();
         let correctAnswerCount = 0;
-        selectAnswers.forEach((selectAnswer) =>{
-            const testQuestion = testData.find((element) => element.question === selectAnswer.question) 
+        selectAnswers.forEach((selectAnswer) => {
+            const testQuestion = testData.find((element) => element.question === selectAnswer.question)
             console.log(testQuestion)
-            if(testQuestion.answer.toString() === selectAnswer.answer){
+            if (testQuestion.answer.toString() === selectAnswer.answer) {
                 correctAnswerCount++;
             }
         })
-        window.alert("Your score is "+correctAnswerCount+"/"+testData.length)
+        setTotalScore(correctAnswerCount)
+        setDisplayModal(true)
     }
 
-    return (<Form onSubmit={handleFormSubmit}>
-        {
 
-            testData.map((testItem) => {
-                return (
-                    <QuestionItem key={testItem.question} question={testItem.question} answerList={answersList} answer={testItem.answer} handleAnswerSelect={handleAnswerSelect} />
-                )
-            })
-        }
+    const handleRetakeClick = (e) => {
+        setDisplayModal(false)
+        setTotalScore(0)
+    }
 
-        <Button type="submit">Submit</Button>
-    </Form>)
+    return (
+        <div>
+            {displayModal && <DialogModal totalScore={totalScore} maxScore={maxScore} resetClickHandler={handleRetakeClick}/>}
+            <Form onSubmit={handleFormSubmit}>
+                {
+
+                    testData.map((testItem) => {
+                        return (
+                            <div>
+                                <QuestionItem key={testItem.question} question={testItem.question} answerList={answersList} answer={testItem.answer} handleAnswerSelect={handleAnswerSelect} />
+                            </div>
+                        )
+                    })
+                }
+
+                <Button type="submit">Submit</Button>
+            </Form>
+        </div>)
 }
 
 export default Test
