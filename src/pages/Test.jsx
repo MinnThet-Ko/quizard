@@ -6,9 +6,12 @@ import db from "../firebase";
 import { Button, Form } from "react-bootstrap";
 import DialogModal from "../components/DialogModal";
 
+import "../assets/styles/test.styles.css";
+
 function Test() {
 
     // State for this class
+    const [testName, setTestName] =  useState("")
     const [testData, setTestData] = useState([])
     const [answersList, setAnswerList] = useState([])
     const [selectAnswers, setSelectedAnswer] = useState([])
@@ -33,6 +36,7 @@ function Test() {
 
             const refTestDoc = doc(db, "tests", params.testId);
             const resultTestDoc = await getDoc(refTestDoc);
+            setTestName(resultTestDoc.data().test_name)
             const resultTestData = resultTestDoc.data().test_data;
             shuffleQuestions(resultTestData)
             setTestData(resultTestData)
@@ -95,21 +99,25 @@ function Test() {
     }
 
     return (
-        <div>
+        <div className="test-container">
             {displayModal && <DialogModal totalScore={totalScore} maxScore={maxScore} resetClickHandler={handleRetakeClick}/>}
-            <Form onSubmit={handleFormSubmit}>
+            
+            <Form onSubmit={handleFormSubmit} className="test-form">
+            <h3 className="test-name">
+                {testName}
+            </h3>
                 {
 
-                    testData.map((testItem) => {
+                    testData.map((testItem, index) => {
                         return (
-                            <div>
-                                <QuestionItem key={testItem.question} question={testItem.question} answerList={answersList} answer={testItem.answer} handleAnswerSelect={handleAnswerSelect} />
-                            </div>
+            
+                                <QuestionItem  key={index} questionNumber={index+1} question={testItem.question} answerList={answersList} answer={testItem.answer} handleAnswerSelect={handleAnswerSelect} />
+ 
                         )
                     })
                 }
 
-                <Button type="submit">Submit</Button>
+                <Button type="submit" className="submit-button">Submit</Button>
             </Form>
         </div>)
 }

@@ -1,11 +1,11 @@
 import './App.css'
-import FlashcardRouter from './components/FlashcardRouters'
+import QuizardRouter from './components/QuizardRouter'
 
 function App() {
   
 
   return (
-    <FlashcardRouter/>
+    <QuizardRouter/>
   )
 }
 

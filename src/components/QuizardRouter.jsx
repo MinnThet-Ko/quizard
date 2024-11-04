@@ -3,14 +3,14 @@ import { BrowserRouter, Route, Routes } from "react-router-dom"
 import Home from "../pages/Home"
 import TestList from "../pages/TestList"
 import Test from "../pages/Test"
-import FlashcardNavbar from "./FlashcardNavbar"
+import QuizardNavbar from "./QuizardNavbar"
 import TestUpload from "../pages/TestUpload"
 
 
-function FlashcardRouter(){
+function QuizardRouter(){
     return(
         <BrowserRouter>
-            <FlashcardNavbar/>
+            <QuizardNavbar/>
             <Routes>
                 <Route index element ={ <Home/>} />
                 <Route path="/test/list" element = {<TestList/>}/>
@@ -21,4 +21,4 @@ function FlashcardRouter(){
     )
 }
 
-export default FlashcardRouter
+export default QuizardRouter

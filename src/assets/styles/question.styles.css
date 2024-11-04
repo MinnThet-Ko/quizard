@@ -1,0 +1,27 @@
+.question-item {
+    padding: 5px;
+    text-align: left;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    width: 100%;
+}
+
+.question-number {
+    text-align: center;
+    vertical-align: middle;
+    width: 5%;
+    height: 100%;
+    padding: 5px;
+    align-self: flex-start;
+}
+
+.question {
+    font-size: larger;
+    margin-bottom: 5px;
+}
+
+.answer {
+    font-size: medium;
+    accent-color: black;
+}

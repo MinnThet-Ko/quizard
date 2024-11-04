@@ -1,5 +1,4 @@
 import { Button } from "react-bootstrap"
-import FlashcardNavbar from "../components/FlashcardNavbar"
 
 
 function Home() {
