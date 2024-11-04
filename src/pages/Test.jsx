@@ -20,21 +20,30 @@ function Test() {
     //I have no idea what is this for.
     const params = useParams();
     
-
+    const shuffleQuestions = (testQuestions) => {
+        let count = testQuestions.length;
+        while (count != 0) {
+            let randomIndex = Math.floor(Math.random() * count); 
+                count--;
+            [testQuestions[count], testQuestions[randomIndex]] = [testQuestions[randomIndex], testQuestions[count]]
+        }
+    }
     useEffect(() => {
         async function getTestData() {
 
             const refTestDoc = doc(db, "tests", params.testId);
             const resultTestDoc = await getDoc(refTestDoc);
             const resultTestData = resultTestDoc.data().test_data;
+            shuffleQuestions(resultTestData)
             setTestData(resultTestData)
             setMaxScore(resultTestData.length)
             const tempAnswerList = [];
             resultTestData.map(test => tempAnswerList.push(test.answer));
             setAnswerList(tempAnswerList);
+            
         }
         getTestData()
-    }, [params])
+    }, [])
 
 
 
@@ -76,6 +85,13 @@ function Test() {
     const handleRetakeClick = (e) => {
         setDisplayModal(false)
         setTotalScore(0)
+        setSelectedAnswer([])
+        const questionsPlaceholder = testData
+        shuffleQuestions(questionsPlaceholder)
+        setTestData(questionsPlaceholder)
+        const tempAnswerList = [];
+        questionsPlaceholder.map(test => tempAnswerList.push(test.answer));
+        setAnswerList(tempAnswerList);
     }
 
     return (

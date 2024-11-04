@@ -16,6 +16,7 @@ function QuestionItem({ question, answerList, answer, handleAnswerSelect }) {
             [answerArray[count], answerArray[randomIndex]] = [answerArray[randomIndex], answerArray[count]]
         }
     }
+    
     const randomizeAnswers = (answerList, exclusionList) => {
         if (exclusionList.length == 4) {
             shuffleArray(exclusionList)
