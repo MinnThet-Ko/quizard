@@ -3,6 +3,7 @@ import { Button, Form, FormControl, FormGroup, FormLabel } from "react-bootstrap
 import * as XLSX from "xlsx"
 import db from "../firebase"
 import { addDoc, collection } from "firebase/firestore";
+import "../assets/styles/test-upload.styles.css";
 
 function TestUpload() {
 
@@ -21,7 +22,6 @@ function TestUpload() {
             sheetData.map((row) => {
                 questions.push({ question: row.question, answer: row.answer });
             })
-            console.log(questions)
             setFileData(questions)
         }
         reader.readAsArrayBuffer(file);
@@ -39,17 +39,20 @@ function TestUpload() {
         setTestName(e.target.value);
     }
     return (<>
-        <Form onSubmit={handleFormSubmit}>
-            <FormGroup>
-                <FormLabel>Enter test name:</FormLabel>
-                <FormControl type="text" onChange={handleTestNameChange} />
-            </FormGroup>
-            <FormGroup>
-                <FormLabel>Upload a file:</FormLabel>
-                <FormControl type="file" onChange={handleFileUpload} />
-            </FormGroup>
-            <Button type="submit">Upload</Button>
-        </Form>
+        <div className="upload-form-container">
+            <Form onSubmit={handleFormSubmit} className="upload-form">
+                <FormGroup className="form-input-container">
+                    <FormLabel className="form-label">Enter test name:</FormLabel>
+                    <FormControl className="form-input" type="text" onChange={handleTestNameChange} />
+                </FormGroup>
+                <FormGroup className="form-input-container">
+                    <FormLabel className="form-label">Upload a file:</FormLabel>
+                    <FormControl className="form-input" type="file" onChange={handleFileUpload} />
+                </FormGroup>
+                <Button className="submit-button" type="submit">Upload</Button>
+            </Form>
+        </div>
+
     </>)
 }
 

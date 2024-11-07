@@ -4,6 +4,7 @@ import db from "../firebase"
 import { Link } from "react-router-dom"
 import "bootstrap/dist/css/bootstrap.css"
 import { Col, Container, Row } from "react-bootstrap"
+import TestItemCard from "../components/TestItemCard"
 
 function TestList() {
     const [testList, setTestList] = useState([])
@@ -28,15 +29,15 @@ function TestList() {
         <Container>
             <Row>
                 <Col>
-                    <ul>
+                    
                         {
                             testList.map((test) => {
-                                return <li>
-                                    <Link key={test.test_id} to={{ pathname: '/test/' + test.test_id }}>{test.test_name}</Link>
-                                </li>
+                                return (
+                                    <TestItemCard test={test}/>
+                                )
                             })
                         }
-                    </ul>
+                    
                 </Col>
             </Row>
 
