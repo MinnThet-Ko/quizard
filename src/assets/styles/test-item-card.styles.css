@@ -1,22 +1,28 @@
 .test-item-card {
-    background-color: #71757e;
+    border-bottom: 1px solid #03045E;
     padding: 5px;
     margin-top: 5px;
     margin-bottom: 10px;   
     display: flex;
-    flex-direction: row;
-    align-content: space-evenly;
+    justify-content: space-between;
 }
 
 .test-card-title {
     font-weight: bold;
+    justify-self: center;
 }
 
 .test-card-button  {
     background-color: #045e03;
     border: none;
+    color: white;
+    box-sizing: border-box;
+    padding: 5px;
+    border-radius: 10px;
+    font-size: small;
+
 }
 
-.test-card-button :hover {
-    background-color: #045e03;
+.test-card-button:hover {
+    background-color: #07a205;
 }

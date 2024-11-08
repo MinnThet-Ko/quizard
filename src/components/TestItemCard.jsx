@@ -1,11 +1,18 @@
-import { Button } from "react-bootstrap"
-import "../assets/styles/test-item-card.styles.css"
 
-function TestItemCard({test}){
+import "../assets/styles/test-item-card.styles.css"
+import { useNavigate } from "react-router-dom"
+
+function TestItemCard({ test }) {
+    const navigator = useNavigate();
+    const handleTakeTestClick = (e) => {
+        console.log(test)
+        let path = "/test/" + test.test_id;
+        navigator(path)
+    }
     return (
         <div className="test-item-card">
             <div className="test-card-title">{test.test_name}</div>
-            <Button className="test-card-button">Take the test</Button>
+            <button className="test-card-button" onClick={handleTakeTestClick}>Take quiz</button>
         </div>
 
     )

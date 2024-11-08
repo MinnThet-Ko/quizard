@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react"
 import { getDocs, collection } from "firebase/firestore"
 import db from "../firebase"
-import { Link } from "react-router-dom"
 import "bootstrap/dist/css/bootstrap.css"
-import { Col, Container, Row } from "react-bootstrap"
 import TestItemCard from "../components/TestItemCard"
+
+import "../assets/styles/test-list.styles.css"
 
 function TestList() {
     const [testList, setTestList] = useState([])
@@ -25,25 +25,20 @@ function TestList() {
         }
         getAllTests();
     }, [])
-    return (<>
-        <Container>
-            <Row>
-                <Col>
-                    
-                        {
-                            testList.map((test) => {
-                                return (
-                                    <TestItemCard test={test}/>
-                                )
-                            })
-                        }
-                    
-                </Col>
-            </Row>
+    return (<div className="test-list-container">
 
-        </Container>
 
-    </>)
+        {
+            testList.map((test) => {
+                return (
+                    <TestItemCard test={test} />
+                )
+            })
+        }
+
+
+
+    </div>)
 }
 
 export default TestList
