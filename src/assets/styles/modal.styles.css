@@ -12,5 +12,24 @@
     margin: 100px auto;
     padding: 20px;
     border-radius: 10px;
-    background: wheat;
+    background: white;
+    border: 1px solid #03045E;
+}
+
+.modal-box p {
+    font-size: larger;
+    font-weight: bold;
+}
+
+.dialog-button-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.dialog-button {
+    background-color: #03045E;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
 }
