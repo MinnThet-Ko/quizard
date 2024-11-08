@@ -9,7 +9,7 @@ function QuestionItem({questionNumber, question, answerList, answer, handleAnswe
 
     useEffect(() => {
         randomizeAnswers(answerList, [answer])
-    }, [])
+    }, [answerList])
 
     const shuffleArray = (answerArray) => {
         let count = answerArray.length;

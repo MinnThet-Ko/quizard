@@ -87,12 +87,14 @@ function Test() {
 
 
     const handleRetakeClick = (e) => {
+        console.log("In handleRetakeClick")
         setDisplayModal(false)
         setTotalScore(0)
         setSelectedAnswer([])
         const questionsPlaceholder = testData
         shuffleQuestions(questionsPlaceholder)
         setTestData(questionsPlaceholder)
+
         const tempAnswerList = [];
         questionsPlaceholder.map(test => tempAnswerList.push(test.answer));
         setAnswerList(tempAnswerList);
