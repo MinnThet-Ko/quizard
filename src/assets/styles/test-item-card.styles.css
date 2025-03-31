@@ -13,16 +13,28 @@
 }
 
 .test-card-button  {
-    background-color: #045e03;
     border: none;
     color: white;
     box-sizing: border-box;
     padding: 5px;
-    border-radius: 10px;
+    border-radius: 5px;
     font-size: small;
-
 }
 
-.test-card-button:hover {
+.test-card-take-button {
+    background-color: #045e03;
+    margin-right: 5px;
+}
+
+.test-card-take-button:hover {
     background-color: #07a205;
 }
+
+.test-card-delete-button {
+    background-color: #bd0000;
+}
+
+.test-card-delete-button:hover {
+    background-color: #f30505;
+}
+

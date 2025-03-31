@@ -31,7 +31,7 @@ function TestList() {
         {
             testList.map((test) => {
                 return (
-                    <TestItemCard test={test} />
+                    <TestItemCard test={test} key={test.test_id}/>
                 )
             })
         }

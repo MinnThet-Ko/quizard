@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Form } from "react-bootstrap";
+import { Container, Form, Row, Col } from "react-bootstrap";
 
 import "../assets/styles/question.styles.css"
 
@@ -39,26 +39,28 @@ function QuestionItem({questionNumber, question, answerList, answer, handleAnswe
     }
 
     return (
-        <div className="question-item">
-            <div className="question-number">
-                {questionNumber}.
-            </div>
-            <div>
-                <div className="question">{question}</div>
+        <Container className="question-item">
+            <Row className="question-row">
+                <Col xs={1} md={1} lg={1} className="question-number">{questionNumber}.</Col>
+                <Col xs={11} md={11} lg={11} className="question">{question}</Col>
+            </Row>
+            <Row>
                 {possibleAnswers.map((answer, index) => {
-                    return (
-                        <Form.Check key={index} className="answer"
-                            inline
-                            name={"group-" + question}
-                            type='radio'
-                            value={question + "-" + answer}
-                            label={answer}
-                            onChange={handleAnswerSelect}
-                        />
-                    )
-                })}
-            </div>
-        </div>
+                        return (
+                            <Col key={index}>
+                                <Form.Check key={index} className="answer"
+                                    inline
+                                    name={"group-" + question}
+                                    type='radio'
+                                    value={question + "-" + answer}
+                                    label={answer}
+                                    onChange={handleAnswerSelect}
+                                />
+                            </Col>
+                        )
+                    })}
+            </Row>
+        </Container>
     )
 }
 
