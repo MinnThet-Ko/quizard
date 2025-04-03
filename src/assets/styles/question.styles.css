@@ -25,3 +25,13 @@
     font-size: medium;
     accent-color: black;
 }
+
+.correct-test-item {
+    border: 2px solid green;
+    background-color: seagreen;
+}
+
+.incorrect-test-item {
+    border: 2px solid red;
+    background-color: indianred;
+}
