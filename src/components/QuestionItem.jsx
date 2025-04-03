@@ -3,13 +3,30 @@ import { Container, Form, Row, Col } from "react-bootstrap";
 
 import "../assets/styles/question.styles.css"
 
-function QuestionItem({questionNumber, question, answerList, answer, handleAnswerSelect }) {
+function QuestionItem({ questionNumber, answerList, handleAnswerSelect, testItem, isSubmitted }) {
 
     const [possibleAnswers, setPossibleAnswers] = useState([]);
+    const [testItemStyle, setTestItemStyle] = useState("")
 
     useEffect(() => {
-        randomizeAnswers(answerList, [answer])
+        randomizeAnswers(answerList, [testItem.answer])
     }, [answerList])
+
+    useEffect(() => {
+        async function initializeClass() {
+
+            if (testItem.selected_answer !== "") {
+                if (isSubmitted && testItem.selected_answer === testItem.answer) {
+                    setTestItemStyle("correct-test-item")
+                } else if (isSubmitted && testItem.selected_answer !== testItem.answer) {
+                    setTestItemStyle("incorrect-test-item")
+                }
+            }
+
+        }
+        initializeClass()
+
+    }, [testItem, isSubmitted])
 
     const shuffleArray = (answerArray) => {
         let count = answerArray.length;
@@ -39,26 +56,26 @@ function QuestionItem({questionNumber, question, answerList, answer, handleAnswe
     }
 
     return (
-        <Container className="question-item">
+        <Container className={testItemStyle + " question-item"}>
             <Row className="question-row">
                 <Col xs={1} md={1} lg={1} className="question-number">{questionNumber}.</Col>
-                <Col xs={11} md={11} lg={11} className="question">{question}</Col>
+                <Col xs={11} md={11} lg={11} className="question">{testItem.question}</Col>
             </Row>
             <Row>
                 {possibleAnswers.map((answer, index) => {
-                        return (
-                            <Col key={index}>
-                                <Form.Check key={index} className="answer"
-                                    inline
-                                    name={"group-" + question}
-                                    type='radio'
-                                    value={question + "-" + answer}
-                                    label={answer}
-                                    onChange={handleAnswerSelect}
-                                />
-                            </Col>
-                        )
-                    })}
+                    return (
+                        <Col key={index}>
+                            <Form.Check key={index} className="answer"
+                                inline
+                                name={testItem.question}
+                                type='radio'
+                                value={answer}
+                                label={answer}
+                                onChange={handleAnswerSelect}
+                            />
+                        </Col>
+                    )
+                })}
             </Row>
         </Container>
     )

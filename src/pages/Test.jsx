@@ -10,11 +10,10 @@ import "../assets/styles/test.styles.css";
 
 function Test() {
 
-    // State for this class
-    const [testName, setTestName] =  useState("")
+    const [testName, setTestName] = useState("")
     const [testData, setTestData] = useState([])
     const [answersList, setAnswerList] = useState([])
-    const [selectAnswers, setSelectedAnswer] = useState([])
+    const [isSubmitted, setSubmitted] = useState(false)
 
     const [maxScore, setMaxScore] = useState(0)
     const [totalScore, setTotalScore] = useState(0)
@@ -22,12 +21,12 @@ function Test() {
 
     //I have no idea what is this for.
     const params = useParams();
-    
+
     const shuffleQuestions = (testQuestions) => {
         let count = testQuestions.length;
         while (count != 0) {
-            let randomIndex = Math.floor(Math.random() * count); 
-                count--;
+            let randomIndex = Math.floor(Math.random() * count);
+            count--;
             [testQuestions[count], testQuestions[randomIndex]] = [testQuestions[randomIndex], testQuestions[count]]
         }
     }
@@ -37,52 +36,45 @@ function Test() {
             const refTestDoc = doc(db, "tests", params.testId);
             const resultTestDoc = await getDoc(refTestDoc);
             setTestName(resultTestDoc.data().test_name)
-            const resultTestData = resultTestDoc.data().test_data;
+            let resultTestData = resultTestDoc.data().test_data
+            resultTestData = resultTestData.map((data) => {
+                return { question: data.question, answer: data.answer, selected_answer: "" }
+            })
             shuffleQuestions(resultTestData)
             setTestData(resultTestData)
             setMaxScore(resultTestData.length)
             const tempAnswerList = [];
             resultTestData.map(test => tempAnswerList.push(test.answer));
             setAnswerList(tempAnswerList);
-            
+
         }
         getTestData()
     }, [])
 
-
-
     const handleAnswerSelect = (e) => {
-        let stringArr = e.target.value.split("-");
-        let choice = {
-            question: stringArr[0],
-            answer: stringArr[1]
-        }
-        let dummyList = selectAnswers
-        let isExists = false;
-        dummyList.forEach((answer) => {
-            if (answer.question === choice.question) {
-                answer.answer = choice.answer
-                isExists = true;
+        const updatedList = testData.map((item) => {
+            if (item.question === e.target.name) {
+                item.selected_answer = e.target.value
             }
+            return item
         })
-        if (!isExists) {
-            dummyList.push(choice)
-        }
-        setSelectedAnswer(dummyList)
+        setTestData(updatedList)
     }
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
         let correctAnswerCount = 0;
-        selectAnswers.forEach((selectAnswer) => {
-            const testQuestion = testData.find((element) => element.question === selectAnswer.question)
-            console.log(testQuestion)
-            if (testQuestion.answer.toString() === selectAnswer.answer) {
+
+        testData.forEach((testItem) => {
+            console.log(testItem.selected_answer)
+            if (testItem.answer === testItem.selected_answer) {
+
                 correctAnswerCount++;
             }
         })
         setTotalScore(correctAnswerCount)
-        setDisplayModal(true)
+        //setDisplayModal(true)
+        setSubmitted(true)
     }
 
 
@@ -102,19 +94,19 @@ function Test() {
 
     return (
         <div className="test-container">
-            {displayModal && <DialogModal totalScore={totalScore} maxScore={maxScore} resetClickHandler={handleRetakeClick}/>}
-            
+            {displayModal && <DialogModal totalScore={totalScore} maxScore={maxScore} resetClickHandler={handleRetakeClick} />}
+
             <Form onSubmit={handleFormSubmit} className="test-form">
-            <h3 className="test-name">
-                {testName}
-            </h3>
+                <h3 className="test-name">
+                    {testName}
+                </h3>
                 {
 
                     testData.map((testItem, index) => {
                         return (
-            
-                                <QuestionItem  key={index} questionNumber={index+1} question={testItem.question} answerList={answersList} answer={testItem.answer} handleAnswerSelect={handleAnswerSelect} />
- 
+
+                            <QuestionItem key={index} questionNumber={index + 1} answerList={answersList} handleAnswerSelect={handleAnswerSelect} testItem={testItem} isSubmitted = {isSubmitted}/>
+
                         )
                     })
                 }
